@@ -1,6 +1,7 @@
 package com.satish.mvvmapp.base;
 
 import android.graphics.Color;
+import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -17,11 +18,22 @@ import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import dagger.android.AndroidInjection;
 import timber.log.Timber;
 
 public class BaseActivity extends AppCompatActivity {
     @BindView(R.id.progress_bar)
     ProgressBar progressBar;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        performDependencyInjection();
+        super.onCreate(savedInstanceState);
+    }
+
+    private void performDependencyInjection() {
+        AndroidInjection.inject(this);
+    }
 
     @Override
     public void setContentView(final int layoutResID) {

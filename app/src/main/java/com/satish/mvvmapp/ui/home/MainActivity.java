@@ -1,14 +1,20 @@
 package com.satish.mvvmapp.ui.home;
 
+import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.satish.mvvmapp.R;
 import com.satish.mvvmapp.base.BaseActivity;
+import com.satish.mvvmapp.data.AppPref;
 import com.satish.mvvmapp.network.model.MenuItem;
 import com.satish.mvvmapp.network.model.Movie;
+import com.satish.mvvmapp.ui.about.AboutActivity;
 
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -16,7 +22,13 @@ import timber.log.Timber;
 
 public class MainActivity extends BaseActivity implements MainNavigator {
 
-    private MainViewModel mViewModel;
+    @Inject
+    ViewModelProvider.Factory mViewModelFactory;
+
+    private MainActivityViewModel mViewModel;
+
+    @Inject
+    AppPref appPref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +37,11 @@ public class MainActivity extends BaseActivity implements MainNavigator {
         ButterKnife.bind(this);
         enableToolbarBackNavigation();
 
-        mViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+        appPref.saveAuthToken("ALJLFKSJLFJLJLKJKLF");
+
+        Timber.e("auth token: %s", appPref.getAuthToken());
+
+        mViewModel = ViewModelProviders.of(this, mViewModelFactory).get(MainActivityViewModel.class);
         mViewModel.setNavigator(this);
 
         initLoader();
@@ -38,6 +54,11 @@ public class MainActivity extends BaseActivity implements MainNavigator {
             else
                 hideProgress();
         });
+    }
+
+    @OnClick(R.id.btn_about)
+    void onAboutClick() {
+        startActivity(new Intent(MainActivity.this, AboutActivity.class));
     }
 
     @OnClick(R.id.btn_get_items)

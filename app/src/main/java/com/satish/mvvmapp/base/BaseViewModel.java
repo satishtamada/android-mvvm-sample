@@ -5,7 +5,6 @@ import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 
 import com.satish.mvvmapp.data.AppDatabase;
-import com.satish.mvvmapp.network.WebClient;
 import com.satish.mvvmapp.network.WebService;
 
 import java.lang.ref.WeakReference;
@@ -16,11 +15,12 @@ public class BaseViewModel<T> extends ViewModel {
     private WeakReference<T> mNavigator;
     private final MutableLiveData<Boolean> mIsLoading = new MutableLiveData<>();
 
-    public WebService getWebClient() {
-        if (webClient == null) {
-            webClient = WebClient.getClient().create(WebService.class);
-        }
+    public BaseViewModel(AppDatabase appDatabase, WebService webService) {
+        this.appDatabase = appDatabase;
+        this.webClient = webService;
+    }
 
+    public WebService getWebClient() {
         return webClient;
     }
 

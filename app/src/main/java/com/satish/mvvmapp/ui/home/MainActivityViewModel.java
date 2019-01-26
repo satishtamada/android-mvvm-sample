@@ -3,6 +3,8 @@ package com.satish.mvvmapp.ui.home;
 import android.os.Handler;
 
 import com.satish.mvvmapp.base.BaseViewModel;
+import com.satish.mvvmapp.data.AppDatabase;
+import com.satish.mvvmapp.network.WebService;
 import com.satish.mvvmapp.network.model.MenuItem;
 import com.satish.mvvmapp.network.model.Movie;
 
@@ -12,7 +14,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainViewModel extends BaseViewModel<MainNavigator> {
+public class MainActivityViewModel extends BaseViewModel<MainNavigator> {
+
+    public MainActivityViewModel(AppDatabase appDatabase, WebService webService) {
+        super(appDatabase, webService);
+    }
 
     public void getMenuItems() {
         // fetching from db

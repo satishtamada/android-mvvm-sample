@@ -29,6 +29,9 @@ task clean(type: Delete) {
 
 ext {
     // TODO - add all the other versions here
+    appName = 'MVVM App'
+    versionName = '1.0.1'
+
     // Sdk and tools
     minSdkVersion = 16
     targetSdkVersion = 28
@@ -40,4 +43,5 @@ ext {
     okttpInterceptor = '3.4.1'
     rxjavaAdapter = '2.4.0'
     eventBus = '3.1.1'
+    dagger2Version = '2.14.1'
 }

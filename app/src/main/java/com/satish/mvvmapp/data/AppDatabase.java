@@ -9,12 +9,7 @@ import io.realm.RealmResults;
 
 public class AppDatabase {
     public void insertMenuItems(final List<MenuItem> menuItems) {
-        Realm.getDefaultInstance().executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                realm.copyToRealmOrUpdate(menuItems);
-            }
-        });
+        Realm.getDefaultInstance().executeTransaction(realm -> realm.copyToRealmOrUpdate(menuItems));
     }
 
     public RealmResults<MenuItem> getMenuItems() {

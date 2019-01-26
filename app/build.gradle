@@ -22,6 +22,30 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    flavorDimensions "tier"
+    productFlavors {
+        dev {
+            buildConfigField "String", "BASE_ENDPOINT", "\"https://api.androidhive.info/json/\""
+            buildConfigField "Boolean", "BYPASS_OTP", "true"
+        }
+
+        staging {
+            buildConfigField "String", "BASE_ENDPOINT", "\"https://api.androidhive.info/json/\""
+            buildConfigField "Boolean", "BYPASS_OTP", "true"
+        }
+
+        prod {
+            buildConfigField "String", "BASE_ENDPOINT", "\"https://api.androidhive.info/json/\""
+            buildConfigField "Boolean", "BYPASS_OTP", "false"
+        }
+    }
+
+    applicationVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "${rootProject.appName}-${variant.name}-v${variant.versionName}.apk"
+        }
+    }
 }
 
 dependencies {
@@ -58,4 +82,9 @@ dependencies {
     implementation "android.arch.lifecycle:extensions:$rootProject.lifecycle"
     annotationProcessor "android.arch.lifecycle:compiler:$rootProject.lifecycle"
     implementation "org.greenrobot:eventbus:$rootProject.eventBus"
+
+    implementation "com.google.dagger:dagger:$rootProject.dagger2Version"
+    annotationProcessor "com.google.dagger:dagger-compiler:$rootProject.dagger2Version"
+    annotationProcessor "com.google.dagger:dagger-android-processor:$rootProject.dagger2Version"
+    implementation "com.google.dagger:dagger-android-support:$rootProject.dagger2Version"
 }
