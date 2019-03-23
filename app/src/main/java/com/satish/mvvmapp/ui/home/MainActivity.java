@@ -18,6 +18,15 @@ import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.Observable;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Predicate;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 
 public class MainActivity extends BaseActivity implements MainNavigator {
@@ -36,15 +45,13 @@ public class MainActivity extends BaseActivity implements MainNavigator {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         enableToolbarBackNavigation();
-
         appPref.saveAuthToken("ALJLFKSJLFJLJLKJKLF");
-
-        Timber.e("auth token: %s", appPref.getAuthToken());
-
         mViewModel = ViewModelProviders.of(this, mViewModelFactory).get(MainActivityViewModel.class);
         mViewModel.setNavigator(this);
-
         initLoader();
+
+        mViewModel.loadAnimals();
+        mViewModel.syncMenu();
     }
 
     private void initLoader() {
@@ -84,5 +91,10 @@ public class MainActivity extends BaseActivity implements MainNavigator {
     @Override
     public void onApiError(Throwable throwable) {
         handleApiError(throwable);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }

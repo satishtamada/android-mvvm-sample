@@ -87,4 +87,9 @@ dependencies {
     annotationProcessor "com.google.dagger:dagger-compiler:$rootProject.dagger2Version"
     annotationProcessor "com.google.dagger:dagger-android-processor:$rootProject.dagger2Version"
     implementation "com.google.dagger:dagger-android-support:$rootProject.dagger2Version"
+
+    // RxJava
+    implementation "io.reactivex.rxjava2:rxjava:$rootProject.rxjava"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$rootProject.rxjavaAdapter"
+    implementation "io.reactivex.rxjava2:rxandroid:$rootProject.rxandroid"
 }

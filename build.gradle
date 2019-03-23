@@ -44,4 +44,7 @@ ext {
     rxjavaAdapter = '2.4.0'
     eventBus = '3.1.1'
     dagger2Version = '2.14.1'
+    rxjava = '2.1.9'
+    rxandroid = '2.0.1'
+    rxjavaAdapter = '2.4.0'
 }

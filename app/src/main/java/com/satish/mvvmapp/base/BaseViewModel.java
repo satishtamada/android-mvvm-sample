@@ -9,15 +9,28 @@ import com.satish.mvvmapp.network.WebService;
 
 import java.lang.ref.WeakReference;
 
+import io.reactivex.disposables.CompositeDisposable;
+
 public class BaseViewModel<T> extends ViewModel {
     private WebService webClient;
     private AppDatabase appDatabase;
     private WeakReference<T> mNavigator;
     private final MutableLiveData<Boolean> mIsLoading = new MutableLiveData<>();
+    private CompositeDisposable mCompositeDisposable = new CompositeDisposable();
 
     public BaseViewModel(AppDatabase appDatabase, WebService webService) {
         this.appDatabase = appDatabase;
         this.webClient = webService;
+    }
+
+    public CompositeDisposable getCompositeDisposable() {
+        return mCompositeDisposable;
+    }
+
+    @Override
+    protected void onCleared() {
+        mCompositeDisposable.dispose();
+        super.onCleared();
     }
 
     public WebService getWebClient() {
